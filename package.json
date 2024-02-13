@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "prebuild": "cd frontend && npm install react-scripts",
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
     "build:frontend": "cd frontend && npm run build",
