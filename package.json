@@ -4,7 +4,7 @@
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
     "build:frontend": "cd frontend && npm run build",
-    "postinstall": "npm run install:frontend && npm run install:backend",
+    "postinstall": "cd frontend && npm install && echo 'Frontend installed' && cd ../backend && npm install && echo 'Backend installed'",
     "start": "node backend/server.js",
     "build": "npm run build:frontend"
   }
