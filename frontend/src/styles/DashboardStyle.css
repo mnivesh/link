@@ -1,0 +1,93 @@
+
+.px-2 {
+  padding: 0 1rem;
+}
+
+.gap-x-3 {
+  gap: 0 2rem;
+}
+
+.dashboard header {
+  margin-bottom: 0.5rem;
+}
+
+.dashboard .main-header{
+  justify-content: space-between;
+  gap: 0 1rem;
+}
+
+.dashboard header h1 {
+  font-size: 2.5rem;
+  margin: 1rem 0.75rem;
+}
+
+.dashboard .profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--feldgrau);
+  margin: 0;
+}
+
+.add-user-btn {
+  width: max-content;
+  text-wrap: nowrap;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+  background: var(--primary);
+  border-radius: 4px;
+  border: none;
+  color: var(--slate-50);
+}
+
+.add-user-btn:hover {
+  background: var(--primary-dark);
+}
+
+.user-groups {
+  flex: 1 1 360px;
+  border: 1px solid var(--slate-200);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.user-groups ul {
+  list-style: none;
+  padding: 0;
+  gap: 0.5rem 0;
+  height: 336px;
+  overflow-y: auto;
+}
+
+.user-groups .header {
+  background: none;
+  color: var(--primary);
+  font-weight: bold;
+  padding: 1rem;
+  padding-bottom: 8px;
+  margin: 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+
+li.user {
+  border-radius: 4px;
+  padding: 0 0.5rem;
+  padding-left: 0.75rem;
+  background: var(--slate-100);
+  /* justify-content: space-between; */
+}
+
+.user .user-email {
+  margin: 1rem 0.75rem;
+}
+
+.dashboard .delete-btn {
+  color: var(--onyx);
+  margin-left: auto;
+}
+.dashboard .delete-btn:hover {
+  color: rgb(188, 100, 100);
+}

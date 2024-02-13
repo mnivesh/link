@@ -1,0 +1,129 @@
+.login-page{
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background: #f0f0f0;
+}
+
+.login-page nav {
+  width: auto;
+  display: flex;
+  padding: .5rem 1rem;
+}
+
+form.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-page .logo {
+  margin-left: auto;
+  height: 32px;
+  align-self: flex-end;
+}
+
+.login .container {
+  display: flex;
+  flex-direction: column;
+  color: gray;
+  border-radius: 8px;
+  padding: 5rem 1.75rem 5.5rem 1.75rem;
+}
+
+.login .head {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;  
+  align-items: center;
+}
+
+.login .body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-y-1 {
+  gap: 0.5rem;
+}
+
+.login .head h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: black;
+  margin: 0.1rem 0;
+}
+.login .welcome {
+  font-size: 1rem;
+  color: var(--primary);
+  margin: 0.5rem 0;
+}
+
+.login input {
+  font-size: medium;
+  min-width: 360px;
+  color: rgb(39, 39, 39);
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 0.75rem 0.5rem;
+  outline: none;
+}
+
+.login input:not([type='submit']):focus {
+  border: 1px solid var(--primary);
+}
+
+.login input[type='submit'] {
+  width: 100%;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  margin-top: 1.75rem;
+  cursor: pointer;
+}
+
+.login input[type='submit']:hover {
+  background: var(--primary);
+  color: #e5e5e5;
+}
+.login label {
+  text-align: left;
+  color: gray;
+}
+
+.login .signup-link {
+  color: black;
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+.login .signup-link a{
+  color: var(--primary);
+}
+
+.login #password {
+  padding-right: 12px;
+}
+.input-group {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px 8px;
+  margin-right: 4px;
+  font-size: 1rem;
+  background: transparent;
+  height: 100%;
+  border: none;
+  border-left: 1px solid gray;
+}

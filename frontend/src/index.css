@@ -1,0 +1,178 @@
+:root {
+  --bg: #f7f7f7;
+  --primary-dark: #141F78;
+  --primary: #243196;
+  --slate-100: #F0F0F4;
+  --slate-200: #ececf3;
+  --slate-50: #f0f0f0;
+  --onyx: #475841;
+  --feldgrau: #3F403F;
+  --ashgray: #9FB8AD;
+  --chilli-red: #E3170A;
+  --orange: #dd5709;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Ensure the page takes up at least the full viewport height */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #141F78;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  /* Required for positioning the button */
+}
+
+.login-button {
+  position: absolute;
+  top: 10px;
+  /* Adjust the top position as needed */
+  right: 10px;
+  /* Corrected the right position with "px" */
+  background-color: #ff5e00;
+  text-decoration: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.widget-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.widget {
+  background-color: white;
+  color: black;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  flex: 1;
+  /* Equal width for all widgets */
+  text-decoration: none;
+}
+
+.widget h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.footer {
+  background-color: #141F78;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto;
+  /* Push the footer to the bottom of the page */
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f3f3;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.success-alert {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #d9f0e0;
+  color: #24954f;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 3px 15px 36px -14px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 3px 15px 36px -14px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 3px 15px 36px -14px rgba(0, 0, 0, 0.75);
+}
+
+.searchbar {
+  background: var(--slate-200);
+  padding: 0.3rem 0.25rem;
+  border: 1px solid var(--slate-200);
+  border-radius: 4px;
+  width: 100%;
+}
+.searchbar:focus-within {
+  background: var(--bg);
+}
+
+.border {border: 1px solid black;} /* test */
+.searchbar button {
+  padding: 0.5rem;
+  color: rgb(58, 58, 58);
+  font-size: 1rem;
+}
+.searchbar button:hover, .searchbar button:focus {
+  color: black;
+}
+
+.searchbar input {
+  background: transparent;
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.relative {
+  position: relative;
+}

@@ -1,0 +1,85 @@
+.customer-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.customer-content {
+  background-color: white;
+  padding: 40px;
+  margin: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 992px;
+}
+
+.customer-content h2 {
+  font-size: 28px;
+  color: #005792;
+  margin-bottom: 20px;
+}
+
+.customer-content h3 {
+  font-size: 22px;
+  color: #005792;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.customer-content p {
+  line-height: 1.6;
+}
+
+.customer-content li {
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.customer-content li:before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #005792;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+table {
+  /* width: 100%; */
+  border-collapse: collapse;
+  margin-top: 20px;
+  /* table-layout: fixed; */
+  text-wrap: nowrap;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  color: #005792;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* style to make responsive  */
+@media only screen and (max-width: 992) {
+  .customer-content {
+    width: 100%;
+  }
+}
