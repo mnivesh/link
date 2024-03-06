@@ -2,10 +2,10 @@ import React from 'react'
 import { FaTrashAlt } from 'react-icons/fa'
 
 function UserItem(props) {
-  const { data, updateSelectedUserId, setPassModal } = props;
+  const { data, updateSelectedUser, setPassModal } = props;
 
   const handleDelete = () => {
-    updateSelectedUserId(data._id);
+    updateSelectedUser(data);
     setPassModal(true);
   }
 

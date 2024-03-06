@@ -72,15 +72,14 @@ router.post('/', [
 //@route           POST /api/user/register
 //@access          Private + Admin
 router.post('/register', [
-  body('email', 'Email is not valid').isEmail(),
-  body('password')
-      .isLength({ min: 8 }).withMessage('Minimum length of password must be 8')
-      .not().isNumeric().withMessage('Password must contain an alphabet')
-      .not().isAlpha().withMessage('Password must contain a number')
-      .not().isUppercase().withMessage('Password must contain a lowercase letter')
-      .not().isLowercase().withMessage('Password must contain a uppercase letter')
-], authenticate, isAdmin, async (req, res) => {
-  const {email, password, role} = req.body;
+  body('email', 'Email is not valid').isEmail()
+  .custom(value => { 
+    if (!value.endsWith('@niveshonline.com')) {
+    throw new Error('Email must be on the @niveshonline.com domain');
+  }
+  return true;})], 
+  authenticate, isAdmin, async (req, res) => {
+  const {email, role} = req.body;
   
   // check for validation error 
   const errors = validationResult(req);
@@ -96,22 +95,16 @@ router.post('/register', [
       return res.status(409).json({ error: 'User already exists with this email' })
     }
 
-    // generate salt for the password 
-    const salt = await bcrypt.genSalt(10);
-
-    // create hash for the password 
-    const hash = await bcrypt.hash(password, salt)
-
     // create user object from request body and send success response
-    const userObject = {email, password: hash};
+    const userObject = {email};
     if(role !== '' && role.length >= 0) {userObject.role = role}
 
     User.create(userObject).then((user) => {
-      res.status(200).json({ message: 'Registration succeed', user });
+      res.status(201).json({ message: 'User registered', user });
     })
   } catch (error) {
     if (error) {
-      console.error('Error creating account: ', error)
+      console.error('Error registering account: ', error)
       res.status(500).json({ error: 'Server error' })
     }
   }
@@ -277,19 +270,19 @@ router.delete('/:id', authenticate, isAdmin, async (req, res) => {
   const userId = req.params.id;
 
   // destructure admin password from request body 
-  const { password } = req.body;
+  // const { password } = req.body;
 
   try {
     // Get admin user to compare password
-    const admin = await User.findById(adminId);
+    // const admin = await User.findById(adminId);
 
-    // compare admin passwords 
-    const isPasswordMatched = await bcrypt.compare(password, admin.password);
+    // // compare admin passwords 
+    // const isPasswordMatched = await bcrypt.compare(password, admin.password);
 
-    // return error if admin password doesn't matched 
-    if(!isPasswordMatched) {
-      return res.status(401).json({error: "Wrong password"})
-    }
+    // // return error if admin password doesn't matched 
+    // if(!isPasswordMatched) {
+    //   return res.status(401).json({error: "Wrong password"})
+    // }
 
     // find and delete the user 
     const user = await User.findByIdAndDelete(userId);

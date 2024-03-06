@@ -6,23 +6,24 @@ export const useLink = () => {
   return useContext(LinkContext);
 }
 
-function LinkProvider({children}) {
-  const url = process.env.REACT_APP_BACKEND_URL;
+function LinkProvider({ children }) {
+  const url = `${process.env.REACT_APP_BASE_URL}/api`;
   const [linksArray, setLinksArray] = useState([])
   const [linkItems, setLinkItems] = useState([])
   const [loading, setLoading] = useState(true);
-  const [alertState, setAlertState] = useState({isOn: false, message: ''});
+  const [alertState, setAlertState] = useState({ isOn: false, message: '' });
 
   useEffect(() => {
     setLinkItems(linksArray);
-  
+
   }, [linksArray])
-  
+
   // 1 method to add new link 
   const addLink = async (linkObject) => {
     const requestOptions = {
+      credentials: 'include',
       method: 'POST',
-      headers: { 'Content-type': 'application/json', 'token': localStorage.getItem('token') },
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(linkObject)
     };
     try {
@@ -35,10 +36,11 @@ function LinkProvider({children}) {
   }
 
   // 2 method to update a link 
-  const updateLink = async ( linkId, updateFields ) => {
+  const updateLink = async (linkId, updateFields) => {
     const requestOptions = {
+      credentials: 'include',
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'token': localStorage.getItem('token') },
+      headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify(updateFields)
     };
     try {
@@ -49,12 +51,12 @@ function LinkProvider({children}) {
       return { 'error': 'Server error! Try again later' };
     }
   }
-  
+
   // 3 method to delete link 
   const deleteLink = async (linkId) => {
     const requestOptions = {
-      method: 'DELETE',
-      headers: { 'token': localStorage.getItem('token') }
+      credentials: 'include',
+      method: 'DELETE'
     };
 
     try {
@@ -72,14 +74,14 @@ function LinkProvider({children}) {
     setLoading(true);
 
     const requestOptions = {
-      method: 'GET',
-      headers: { 'token': localStorage.getItem('token') }
+      credentials: 'include',
+      method: 'GET'
     };
 
     try {
       const response = await fetch(`${url}/link/`, requestOptions);
       const data = await response.json()
-      if(!response.ok) {
+      if (!response.ok) {
         alert(data.error)
       }
 
@@ -89,20 +91,20 @@ function LinkProvider({children}) {
       console.log(error);
       return { 'error': 'Server error! Try again later' };
     }
-    finally{
+    finally {
       setLoading(false);
     }
   }
 
   return (
     <LinkContext.Provider
-      value={{ 
-        addLink, 
-        updateLink, 
-        deleteLink, 
+      value={{
+        addLink,
+        updateLink,
+        deleteLink,
         getAllLinks,
-        linkItems, 
-        setLinkItems, 
+        linkItems,
+        setLinkItems,
         linksArray,
         setLinksArray,
         loading,

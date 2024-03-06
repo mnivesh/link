@@ -1,45 +1,36 @@
-import React, { useState } from 'react'
-import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import React from 'react'
 import { IoClose } from "react-icons/io5";
 import { useAuth } from '../../context/AuthContext';
 import { useLink } from '../../context/LinkContext';
 
 function PasswordModal(props) {
-  const { isOpen, onClose, selectedUserId } = props;
-  const [password, setPassword] = useState('')
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const { isOpen, onClose, selectedUser } = props;
   const { setAlertState } = useLink();
   const { deleteUser, originalAdminList, originalUserList, setOriginalAdminList, setOriginalUserList } = useAuth();
-
-  const togglePasswordVisibility = (e) => {
-    e.preventDefault()
-    setIsPasswordVisible(prevState => !prevState)
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(selectedUserId);
+    console.log(selectedUser);
 
-    const response = await deleteUser(selectedUserId, password);
+    const response = await deleteUser(selectedUser._id);
     const data = await response.json();
 
-    if(!response.ok) {
+    if (!response.ok) {
       alert(data.error);
       return;
     }
 
-    if(data.user.role === 'admin') {
-      const updatedList = originalAdminList.filter(user => user._id !== data.user._id) 
+    if (data.user.role === 'admin') {
+      const updatedList = originalAdminList.filter(user => user._id !== data.user._id)
       setOriginalAdminList(updatedList);
     }
     else {
-      const updatedList = originalUserList.filter(user => user._id !== data.user._id) 
+      const updatedList = originalUserList.filter(user => user._id !== data.user._id)
       setOriginalUserList(updatedList);
     }
-    setAlertState({isOn: true, message: data.message})
+    setAlertState({ isOn: true, message: data.message })
 
-    setPassword('');
     onClose();
   }
   if (!isOpen) return null
@@ -51,26 +42,13 @@ function PasswordModal(props) {
           <IoClose />
         </button>
         <div className="flex flex-col">
-          <label htmlFor="" className='head-label'>Enter admin's password to delete this user</label>
-          <div className="flex flex-col">
-            <label htmlFor="admin-password">Password</label>
-            <div className='input-group'>
-              <input
-                className='w-full'
-                type={isPasswordVisible ? 'text' : 'password'}
-                name="password"
-                id="password"
-                minLength='8'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button id='eye-icon' type='button' className='eye-icon' onClick={togglePasswordVisibility}> {
-                isPasswordVisible ? <BsEyeSlash /> : <BsEye />
-              }</button>
-
-            </div>
+          <h4 className='head-label'>Are you sure you want to remove?</h4>
+          <label style={{lineHeight: '1.3rem'}}><ins>{selectedUser.email}</ins> will not be able to access this website</label>
+          
+          <div className="flex content-end my-3 gap-x-2">
+            <button onClick={onClose} type='button' className='close modal-btn'>Cancel</button>
+            <button type='submit' className='add modal-btn'>Remove</button>
           </div>
-          <button type='submit' className='submit'>Submit</button>
         </div>
       </div>
     </form>

@@ -7,12 +7,12 @@ module.exports = async function isAdmin(req, res, next){
   const user = await User.findById(userid);
   if(!user) {
     console.error('Unable to find user in database');
-    return res.status(404).json({error: 'User not found'})
+    return res.status(403).json({error: 'forbidden'})
   }
 
   // return error if user is not admin 
   if(user.role !== 'admin') {
-    return res.status(403).json("Unauthorized access");
+    return res.status(401).json("Unauthorized access");
   }
 
   // call next middleware function 

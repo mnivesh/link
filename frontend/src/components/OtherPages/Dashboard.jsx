@@ -16,7 +16,7 @@ function Dashboard() {
   const [inputValue, setInputValue] = useState('');
   const [isModalOpen, setisModalOpen] = useState(false);
   const [isPassModalOpen, setIsPassModalOpen] = useState(false)
-  const [selectedUserId, setSelectedUserId] = useState('');
+  const [selectedUser, setSelectedUser] = useState('');
   const { user, loggedIn, loading, getUserList, originalAdminList, originalUserList, setOriginalAdminList, setOriginalUserList } = useAuth();
 
   // function to search users 
@@ -59,8 +59,8 @@ function Dashboard() {
   }
 
   // function to update selected user 
-  const updateSelectedUserId = (value) => {
-    setSelectedUserId(value);
+  const updateSelectedUser = (value) => {
+    setSelectedUser(value);
   }
 
 
@@ -96,7 +96,7 @@ function Dashboard() {
       </header>
       <main className='flex flex-col gap-y-3'>
         <SuccessAlert />
-        <PasswordModal isOpen={isPassModalOpen} onClose={() => setIsPassModalOpen(false)} selectedUserId={selectedUserId}/>
+        <PasswordModal isOpen={isPassModalOpen} onClose={() => setIsPassModalOpen(false)} selectedUser={selectedUser}/>
         <UserModal isOpen={isModalOpen} onClose={() => setisModalOpen(false)} heading={'Register User'} actionButton='Register' />
         <section className="flex px-2 main-header">
           <Searchbar inputValue={inputValue} changeInputValue={searchUser} placeholder='Search user'/>
@@ -107,7 +107,7 @@ function Dashboard() {
             <p className='header'>Admins</p>
             <ul className='flex flex-col'> {
               adminList?.map(user => (
-                <UserItem key={user._id} data={user} updateSelectedUserId={updateSelectedUserId} setPassModal={setIsPassModalOpen}/>
+                <UserItem key={user._id} data={user} updateSelectedUser={updateSelectedUser} setPassModal={setIsPassModalOpen}/>
               ))
             }
             </ul>
@@ -116,7 +116,7 @@ function Dashboard() {
             <p className='header'>Users</p>
             <ul className='flex flex-col'>{
             userList?.map(user => (
-              <UserItem key={user._id} data={user} updateSelectedUserId={updateSelectedUserId} setPassModal={setIsPassModalOpen}/>
+              <UserItem key={user._id} data={user} updateSelectedUser={updateSelectedUser} setPassModal={setIsPassModalOpen}/>
             ))
             }</ul>
           </div>

@@ -6,17 +6,18 @@ export const useAuth = () => {
   return useContext(AuthContext);
 }
 
-function AuthProvider({children}) {
-  const url = process.env.REACT_APP_BACKEND_URL;
+function AuthProvider({ children }) {
+  const url = `${process.env.REACT_APP_BASE_URL}/api`;
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState({ _id: '', email: '', role: ''});
+  const [user, setUser] = useState({ _id: '', email: '', role: '' });
   const [originalAdminList, setOriginalAdminList] = useState([])
   const [originalUserList, setOriginalUserList] = useState([])
 
   // 1 login method for authentication 
   const login = async (email, password) => {
     const requestOptions = {
+      credentials: 'include',
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -31,11 +32,12 @@ function AuthProvider({children}) {
   }
 
   // 2 registration By admin
-  const register = async ( email, password, role ) => {
+  const register = async (email, role) => {
     const requestOptions = {
+      credentials: 'include',
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'token': localStorage.getItem('token') },
-      body: JSON.stringify({ email, password, role })
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ email, role })
     };
     try {
       const response = await fetch(`${url}/user/register`, requestOptions);
@@ -45,13 +47,13 @@ function AuthProvider({children}) {
       return { 'error': 'Server error! Try again later' };
     }
   }
-  
+
   // 3 method to fetch user details 
-  const fetchUser = async (token) => {
+  const fetchUser = async () => {
     const requestOptions = {
       accept: '/',
       method: 'GET',
-      headers: { 'token': token }
+      credentials: 'include'
     };
 
     try {
@@ -59,21 +61,21 @@ function AuthProvider({children}) {
       const data = await response.json();
       if (data.user) {
         setUser(data.user);
+        setLoggedIn(true)
       }
 
     } catch (error) {
       console.log(error);
-    }
-    finally {
-      setLoading(false);
     }
   }
 
   // 4 change password when already logged in
   const changePassword = async (currentPassword, newPassword) => {
     const requestOptions = {
+      credentials: 'include',
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'token': localStorage.getItem('token') },
+
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ currentPassword, newPassword })
     };
     try {
@@ -87,11 +89,11 @@ function AuthProvider({children}) {
 
 
   // 5 delete user by admin
-  const deleteUser = async (userId, adminPassword) => {
+  const deleteUser = async (userId) => {
     const requestOptions = {
+      credentials: 'include',
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json', 'token': localStorage.getItem('token') },
-      body: JSON.stringify({ 'password': adminPassword })
+      headers: { 'Content-Type': 'application/json' }
     };
     try {
       const response = await fetch(`${url}/user/${userId}`, requestOptions);
@@ -105,16 +107,16 @@ function AuthProvider({children}) {
   // 6 change password when already logged in
   const getUserList = async (role) => {
     const requestOptions = {
-      method: 'GET',
-      headers: { 'token': localStorage.getItem('token') }
+      credentials: 'include',
+      method: 'GET'
     };
     try {
       const response = await fetch(`${url}/user/all/?role=${role}`, requestOptions);
       const data = await response.json();
-      if(!response.ok) {
+      if (!response.ok) {
         console.log('Error fetching users: ', response.error.message);
         alert("Unable to get user list, try again later");
-        return ;
+        return;
       }
 
       return data;
@@ -124,33 +126,53 @@ function AuthProvider({children}) {
     }
   }
 
+  // check if user is logged in 
+  const isAuthenticated = async () => {
+    try {
+      console.log('url: ', process.env.REACT_APP_BASE_URL);
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/auth/isAuthenticated`, {
+        credentials: 'include',
+        method: 'GET'
+      });
+      const data = await response.json();
+      console.log('data: ', data)
+      if(!response.ok) {
+        throw new Error(`Unable to verify session : ${data.error}`);
+      }
+  
+      if(data.isAthenticated) {
+        fetchUser();
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setLoggedIn(true);
-      fetchUser(token);
-    }
+    setLoading(true);
+    isAuthenticated();
 
   }, [loggedIn])
 
   return (
     <AuthContext.Provider
       value={{
-        login, 
-        register, 
+        login,
+        register,
         changePassword,
-        user, 
+        user,
         setUser,
-        fetchUser, 
+        fetchUser,
         getUserList,
         deleteUser,
         originalAdminList,
         setOriginalAdminList,
         originalUserList,
         setOriginalUserList,
-        loggedIn, 
-        setLoggedIn,  
+        loggedIn,
+        setLoggedIn,
         loading
       }}
     >

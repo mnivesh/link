@@ -8,8 +8,17 @@ function HomePage() {
   const {loggedIn, setLoggedIn, user, setUser} = useAuth();
 
   // method to logout 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
+  const handleLogout = async () => {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/auth/logout`, {
+      credentials: 'include',
+      method: 'POST',
+    });
+    
+    if(!response.ok) {
+      console.log("Unable to logout, something went wrong")
+    }
+    
+    console.log('Logged out')
     setLoggedIn(false);
     setUser({ _id: '', email: '', role: ''});
   }

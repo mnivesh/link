@@ -1,7 +1,7 @@
 .login-page{
   font-family: Arial, sans-serif;
   min-height: 100vh;
-  background: #f0f0f0;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 
 .login-page nav {
@@ -23,26 +23,24 @@ form.login {
   align-self: flex-end;
 }
 
-.login .container {
-  display: flex;
-  flex-direction: column;
-  color: gray;
-  border-radius: 8px;
-  padding: 5rem 1.75rem 5.5rem 1.75rem;
-}
-
-.login .head {
+.login-page .body {
   display: flex;
   flex-direction: column;
   gap: 0rem;  
   align-items: center;
 }
-
-.login .body {
+.login-page .head {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
+  gap: 0rem;  
+  align-items: center;
+  background: #005792;
+  width: max-content;
+  height: 85vh;
+  border-radius: 6px;
+  margin: 0.3rem 0;
+  padding: 3rem 4rem;
+  box-shadow: 0 0 12px -4px rgb(192, 192, 192);
 }
 
 .flex-col {
@@ -54,18 +52,58 @@ form.login {
   gap: 0.5rem;
 }
 
-.login .head h3 {
-  font-size: 2rem;
+.login-page .head h4 {
+  font-size: 1.8rem;
   font-weight: 700;
-  color: black;
+  color: #ddd;
   margin: 0.1rem 0;
 }
 .login .welcome {
   font-size: 1rem;
-  color: var(--primary);
+  color: #ddd;
+  margin: 0.5rem 0;
+}
+.login-page .head p.continue {
+  font-size: 1.1rem;
+  color: #ddd;
   margin: 0.5rem 0;
 }
 
+.login-page .error {
+  color: var(--orange);
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0.2rem;
+}
+
+#login-with-zoho {
+  display: flex;
+  align-items: center;
+  gap: 0 0.75rem;
+  padding: 0rem 0.75rem;
+  margin: 1rem 0;
+  margin-top: 5.5rem;
+  border: 1px solid var(--orange);
+  color: var(--orange);
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 8px -4px rgb(78, 78, 78);
+}
+
+#login-with-zoho:hover {
+  background: var(--orange);
+  color: #ddd;
+}
+
+#login-with-zoho .icon {
+  font-size: 3rem;
+  line-height: 1rem;
+}
+
+#login-with-zoho .text {
+  font-size: 1.0rem;
+  /* border: 1px solid black; */
+}
 .login input {
   font-size: medium;
   min-width: 360px;

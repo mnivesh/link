@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/ModalStyle.css';
 import { useLink } from '../../context/LinkContext';
 
 function UserModal(props) {
   const { isOpen, onClose, heading, actionButton } = props;
-  const [credentials, setCredentials] = useState({ email: '', password: '', role: '' })
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [credentials, setCredentials] = useState({ email: '', role: '' })
   const { register, setOriginalAdminList, setOriginalUserList } = useAuth();
   const { setAlertState } = useLink();
 
@@ -16,15 +14,10 @@ function UserModal(props) {
     setCredentials({ ...credentials, [name]: value });
   }
 
-  const togglePasswordVisibility = (e) => {
-    e.preventDefault()
-    setIsPasswordVisible(prevState => !prevState)
-  }
-
   const submitForm = async (e) => {
     e.preventDefault();
 
-    const response = await register(credentials.email, credentials.password, credentials.role);
+    const response = await register(credentials.email, credentials.role);
 
 
     // convert response to json 
@@ -48,7 +41,7 @@ function UserModal(props) {
     }
 
     // set credentials to empty string 
-    setCredentials({ email: '', password: '' });
+    setCredentials({ email: '', role: '' });
 
     // close the modal 
     onClose();
@@ -77,20 +70,6 @@ function UserModal(props) {
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
-          <div className='input-group'>
-            <input
-              type={isPasswordVisible ? 'text' : 'password'}
-              name="password"
-              id="password"
-              minLength='8'
-              value={credentials.password}
-              onChange={handleOnChange}
-            />
-            <button id='eye-icon' type='button' className='eye-icon' onClick={togglePasswordVisibility}> {
-              isPasswordVisible ? <BsEyeSlash /> : <BsEye />
-            }</button>
-
-          </div>
         </div>
         <div className="flex content-end my-3 gap-x-2">
           <button onClick={onClose} type='button' className='close modal-btn'>Close</button>
