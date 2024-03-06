@@ -9,7 +9,7 @@ export const useAuth = () => {
 function AuthProvider({ children }) {
   const url = `${process.env.REACT_APP_BASE_URL}/api`;
   const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [user, setUser] = useState({ _id: '', email: '', role: '' });
   const [originalAdminList, setOriginalAdminList] = useState([])
   const [originalUserList, setOriginalUserList] = useState([])
@@ -129,19 +129,17 @@ function AuthProvider({ children }) {
   // check if user is logged in 
   const isAuthenticated = async () => {
     try {
-      console.log('url: ', process.env.REACT_APP_BASE_URL);
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/auth/isAuthenticated`, {
         credentials: 'include',
         method: 'GET'
       });
       const data = await response.json();
-      console.log('data: ', data)
       if(!response.ok) {
         throw new Error(`Unable to verify session : ${data.error}`);
       }
   
       if(data.isAthenticated) {
-        fetchUser();
+        await fetchUser();
       }
     } catch (err) {
       console.error(err)
