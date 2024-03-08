@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import LoginForm from './LoginForm'
-import Footer from '../Root/Footer'
+import { Link } from 'react-router-dom'
 import { SiZoho } from "react-icons/si";
 import logo from '../../assets/LOGOfinal.png'
+import illustration from '../../assets/illustration.png'
 import '../../styles/LoginStyle.css'
 
 function LoginPage() {
@@ -34,8 +33,9 @@ return (
       </nav>
     </header>
     <section className='body'>
-      <div className='head'>
-        <h4 className='welcome'>Welcome to Niveshonline</h4>
+      <div className="container">
+      <div className='left'>
+        <h4 className='welcome'>Welcome to <span>Niveshonline</span> </h4>
         <p className='continue'>Login to continue</p>
         {error === 'userNotFound' && <p className="error">Access Denied !</p>}
         <button
@@ -45,6 +45,10 @@ return (
           <span className='icon'><SiZoho /></span>
           <span className='text'>Login with Zoho</span>
         </button>
+      </div>
+      <div className="right">
+        <img src={illustration} id='illustration' alt="" width='360px'/>
+      </div>
       </div>
     </section>
     {/* <LoginForm/> */}

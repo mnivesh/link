@@ -53,8 +53,11 @@
   line-height: 20px;
 }
 
+.customer-container section.table {
+  width: 100%;
+  overflow-x: scroll;
+}
 table {
-  /* width: 100%; */
   border-collapse: collapse;
   margin-top: 20px;
   /* table-layout: fixed; */
