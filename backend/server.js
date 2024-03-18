@@ -63,16 +63,24 @@ app.get("/auth/zoho/callback", async (req, res) => {
     let id_token = tokenResponse.data.id_token;
     const decode = jwt.decode(id_token);
 
-    const userExists = await User.findOne({email: decode.email}).select('-password');
-    
-    // redirect to login page if user not found 
-    if(!userExists) {
+    // Check if the user is from your own company
+    const allowedDomain = "niveshonline.com"; //company's domain
+
+    // redirect to login page if user is not from same domain 
+    if(!decode.email.endsWith(`@${allowedDomain}`)) {
       return res.redirect('/login?error=userNotFound');
     }
 
-    if(!userExists?.picture || !userExists.picture?.length) {
-      userExists.picture = decode.picture;
-      userExists.save();
+    // find if user exists in DB 
+    const userExists = await User.findOne({email: decode.email}).select('-password');
+
+    // create new user if it does not exist
+    if(!userExists) {
+      console.log('creating new user...')// test
+     await User.create({
+        email: decode.email,
+        role: 'user'
+      }).then(user => userExists = user);
     }
     
     // generate JWT of received user 
