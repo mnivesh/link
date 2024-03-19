@@ -263,9 +263,9 @@ router.put('/change-password', [
 })
 
 //@description     Update user role
-//@route           PUT /api/user/id
+//@route           PUT /api/user
 //@access          Protected + Admin
-router.put('/:id', [
+router.put('/', [
   body('email', 'Email is not valid').isEmail()
   .custom(value => {
     if (!value.endsWith('@niveshonline.com')) {
@@ -281,11 +281,9 @@ router.put('/:id', [
       return true;
     })
 ], authenticate, async (req, res) => {
-  // destructure user id from req params
-  const userId = req.params.id;
 
   // destructure email and role from request body 
-  const { role } = req.body;
+  const { email, role } = req.body;
 
   try {
     // check for validation errors 
@@ -295,7 +293,7 @@ router.put('/:id', [
     }
 
     // find user in DB 
-    const user = await User.findByIdAndUpdate(userId, {role}, {new: true});
+    const user = await User.findOneAndUpdate({email}, {role}, {new: true}).select('-password');
 
     // return error if user doesn't exist 
     if (!user) {
