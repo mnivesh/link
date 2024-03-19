@@ -72,7 +72,7 @@ app.get("/auth/zoho/callback", async (req, res) => {
     }
 
     // find if user exists in DB 
-    const userExists = await User.findOne({email: decode.email}).select('-password');
+    let userExists = await User.findOne({email: decode.email}).select('-password');
 
     // create new user if it does not exist
     if(!userExists) {
