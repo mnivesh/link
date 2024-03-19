@@ -15,9 +15,9 @@ function UserItem(props) {
         <p className="initial">{data.email[0].toUpperCase()}</p>
       </figure>
       <p className='user-email'>{data.email}</p>
-      <button className='delete-btn icon-btn' title='delete' onClick={handleDelete}>
+      {/* <button className='delete-btn icon-btn' title='delete' onClick={handleDelete}>
         <FaTrashAlt />
-      </button>
+      </button> */}
     </li>
   )
 }

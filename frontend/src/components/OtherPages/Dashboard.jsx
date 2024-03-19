@@ -6,7 +6,7 @@ import '../../styles/DashboardStyle.css'
 import UserItem from '../Root/UserItem';
 import UserModal from '../Root/UserModal';
 import SuccessAlert from '../Root/SuccessAlert';
-import PasswordModal from '../Root/PasswordModal';
+// import PasswordModal from '../Root/PasswordModal';
 import { FaUser } from "react-icons/fa";
 import LoadingPage from '../Root/LoadingPage';
 
@@ -49,13 +49,15 @@ function Dashboard() {
   // function to get admins list 
   const getAdmins = async () => {
     const data = await getUserList('admin');
-    setOriginalAdminList(data.users);
+    if(data?.users)
+      setOriginalAdminList(data.users);
   }
 
   // function to get users list 
   const getUsers = async () => {
     const data = await getUserList('user');
-    setOriginalUserList(data.users);
+    if(data?.users)
+      setOriginalUserList(data.users);
   }
 
   // function to update selected user 
@@ -96,11 +98,11 @@ function Dashboard() {
       </header>
       <main className='flex flex-col gap-y-3'>
         <SuccessAlert />
-        <PasswordModal isOpen={isPassModalOpen} onClose={() => setIsPassModalOpen(false)} selectedUser={selectedUser}/>
-        <UserModal isOpen={isModalOpen} onClose={() => setisModalOpen(false)} heading={'Register User'} actionButton='Register' />
+        {/* <PasswordModal isOpen={isPassModalOpen} onClose={() => setIsPassModalOpen(false)} selectedUser={selectedUser}/> */}
+        <UserModal isOpen={isModalOpen} onClose={() => setisModalOpen(false)} heading={'Update User'} actionButton='Update' />
         <section className="flex px-2 main-header">
           <Searchbar inputValue={inputValue} changeInputValue={searchUser} placeholder='Search user'/>
-          <button className='add-user-btn' onClick={() => setisModalOpen(true)}>Add user</button>
+          <button className='add-user-btn' onClick={() => setisModalOpen(true)}>Update user</button>
         </section>
         <section className='flex px-2 gap-x-3'>
           <div className='user-groups admins px-2'>

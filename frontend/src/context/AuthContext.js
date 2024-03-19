@@ -148,6 +148,23 @@ function AuthProvider({ children }) {
     }
   }
 
+   // update user role by admin
+   const updateRole = async (email, role) => {
+    const requestOptions = {
+      credentials: 'include',
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({email, role})
+    };
+    try {
+      const response = await fetch(`${url}/user`, requestOptions);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return { 'error': 'Server error! Try again later' };
+    }
+  }
+
   useEffect(() => {
     setLoading(true);
     isAuthenticated();
@@ -165,6 +182,7 @@ function AuthProvider({ children }) {
         fetchUser,
         getUserList,
         deleteUser,
+        updateRole,
         originalAdminList,
         setOriginalAdminList,
         originalUserList,
